@@ -2,7 +2,7 @@
 
 ## Team "team name"
 
-- Yaniel
+- Yaniel Varela Soler
 - Robinson Espinosa Martinez
 - Dylan M. Oliver Martinez
 
@@ -26,7 +26,7 @@ In order to properly run the ETL code, these packages are required to be downloa
 
 ## Work Distribution
 
-- Database and Render Setup: Yaniel
+- SQL Database and Render Setup: Yaniel
 - ETL coding: Robinson and Dylan
 
 
