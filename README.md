@@ -1,6 +1,6 @@
 ## CIIC 4060/ICOM 5016 – Introduction to Database Systems  Fall 2026 Term Project – Car Tracking
 
-## Team "team name"
+## Team Syntax Error Squad
 
 - Yaniel Varela Soler
 - Robinson Espinosa Martinez
