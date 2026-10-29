@@ -29,4 +29,8 @@ In order to properly run the ETL code, these packages are required to be downloa
 - SQL Database and Render Setup: Yaniel
 - ETL coding: Robinson and Dylan
 
+## Random Class Information
+- Handler: Donde estan los objetos de pyhton que manejan cada request. No se conectan a la base de dato, se conectan a los otros objetos que se encuentran en el DAO
+- DAO (Data Access Object): Sabe insertar records, leer record y actualizar record de una tabla. 
+
 
