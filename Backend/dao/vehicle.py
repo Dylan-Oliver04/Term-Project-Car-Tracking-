@@ -160,10 +160,7 @@ class VehicleDao:
         cursor = conn.cursor(cursor_factory=DictCursor)
 
         # Retrieve the existing vehicle
-        cursor.execute(
-            "SELECT * FROM vehicle WHERE vehicle_id = %s",
-            (vehicle_id,)
-        )
+        cursor.execute("SELECT * FROM vehicle WHERE vehicle_id = %s",(vehicle_id,))
 
         current = cursor.fetchone()
         if current is None:
