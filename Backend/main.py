@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware 
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
@@ -7,11 +7,16 @@ from fastapi.encoders import jsonable_encoder
 from dao.vehicle import Vehicle, VehicleUpdate, VehicleCreate
 from dao.road_segment import RoadSegmentCreate, RoadSegmentUpdate
 from dao.parking_area import ParkingAreaCreate, ParkingAreaUpdate
+from dao.vehicle_assigment import VehicleAssignmentDAO
+from dao.driver import DriverDAO
+
 
 # Import Handler Api Specifications from handler folder
 from handler.vehicle import VehicleHandler
 from handler.road_segment import RoadSegmentHandler
 from handler.parking_area import ParkingAreaHandler
+from handler.vehicle_assigment import VehicleAssignmentHandler
+from handler.driver import DriverDAO, DriverHandler
 
 app = FastAPI()
 
@@ -101,4 +106,46 @@ async def update_parking_area(parking_area_id: int, area_data: ParkingAreaUpdate
 async def delete_parking_area(parking_area_id: int):
     return ParkingAreaHandler().delete_parking_area(parking_area_id)
 
+# 5.4 Driver
+@app.post("/api/v1/drivers", status_code=201)
+async def create_driver(request: Request):
+    return DriverHandler().create_driver(await request.body())
+
+@app.get("/api/v1/drivers")
+async def get_drivers(request: Request):
+    return DriverHandler().get_drivers(request.query_params)
+
+@app.get("/api/v1/drivers/{driver_id}")
+async def get_driver_by_ID(driver_id: str):
+    return DriverHandler().get_driver_by_id(driver_id)
+
+@app.put("/api/v1/drivers/{driver_id}")
+async def update_driver(driver_id: str, request: Request):
+    return DriverHandler().update_driver(driver_id, await request.body())
+
+@app.delete("/api/v1/drivers/{driver_id}")
+async def delete_driver(driver_id: str):
+    return DriverHandler().delete_driver(driver_id)
+
+
+# 5.5 Vehicle Assignment
+@app.post("/api/v1/vehicle-assignments", status_code=201)
+async def create_vehicle_assignment(request: Request):
+    return VehicleAssignmentHandler().create_assignment(await request.body())
+
+@app.get("/api/v1/vehicle-assignments")
+async def get_vehicle_assignments(request: Request):
+    return VehicleAssignmentHandler().get_assignments(request.query_params)
+
+@app.get("/api/v1/vehicle-assignments/{assignment_id}")
+async def get_vehicle_assignment_by_ID(assignment_id: str):
+    return VehicleAssignmentHandler().get_assignment_by_id(assignment_id)
+
+@app.put("/api/v1/vehicle-assignments/{assignment_id}")
+async def update_vehicle_assignment(assignment_id: str, request: Request):
+    return VehicleAssignmentHandler().update_assignment(assignment_id, await request.body())
+
+@app.delete("/api/v1/vehicle-assignments/{assignment_id}")
+async def delete_vehicle_assignment(assignment_id: str):
+    return VehicleAssignmentHandler().delete_assignment(assignment_id)
 
