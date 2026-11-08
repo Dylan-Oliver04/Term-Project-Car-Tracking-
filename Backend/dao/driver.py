@@ -87,12 +87,11 @@ class DriverDAO:
     def create_driver(self, data):
         with get_cursor() as cursor:
 
-            cursor.execute(sql.SQL("LOCK TABLE {} IN EXCLUSIVE MODE").format(TABLE))
+            #cursor.execute(sql.SQL("LOCK TABLE {} IN EXCLUSIVE MODE").format(TABLE))
             cursor.execute(
-                sql.SQL("INSERT INTO {} (driver_id, first_name, last_name, license_number, hired_at) "
-                        "VALUES ((SELECT COALESCE(MAX(driver_id), 0) + 1 FROM {}), "
-                        "%(first_name)s, %(last_name)s, %(license_number)s, %(hired_at)s) "
-                        "RETURNING " + COLUMNS).format(TABLE, TABLE),
+                sql.SQL("INSERT INTO {} (first_name, last_name, license_number, hired_at) "
+                        "VALUES (%(first_name)s, %(last_name)s, %(license_number)s, %(hired_at)s) "
+                        "RETURNING " + COLUMNS).format(TABLE),  #format(TABLE, TABLE)
                 data)
             return cursor.fetchone()
 

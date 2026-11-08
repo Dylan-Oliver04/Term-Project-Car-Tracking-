@@ -45,14 +45,12 @@ class ParkingAreaDao:
 
         query = """
             Insert into parking_area (
-                parking_area_id, 
                 name, 
                 capacity, 
                 geom, 
                 created_at
             )
             VALUES (
-                (SELECT MAX(parking_area_id) + 1 FROM parking_area),
                 %(name)s,
                 %(capacity)s,
                 ST_SetSRID(ST_GeomFromGeoJSON(%(geom)s), 4326),

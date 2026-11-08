@@ -54,7 +54,6 @@ class RoadSegmentDao:
 
         query = """
             Insert into road_segment (
-                road_id, 
                 name, 
                 speed_limit_kph, 
                 geom,
@@ -63,7 +62,6 @@ class RoadSegmentDao:
                 direction
             )
             Values (
-                (SELECT MAX(road_id) + 1 FROM road_segment),
                 %(name)s,
                 %(speed_limit_kph)s,
                 ST_SetSRID(ST_GeomFromGeoJSON(%(geom)s), 4326),
@@ -251,7 +249,7 @@ class RoadSegmentDao:
         query = """
             Delete From road_segment
             Where road_id = %s
-             road_id
+            Returning road_id
         """
         try:
             cursor.execute(query, (road_id,))

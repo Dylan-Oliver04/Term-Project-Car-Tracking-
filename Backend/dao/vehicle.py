@@ -52,7 +52,6 @@ class VehicleDao:
 
         query = """
             insert into vehicle (
-                vehicle_id,
                 vehicle_type_id, 
                 vehicle_status_id, 
                 plate_number,
@@ -62,7 +61,6 @@ class VehicleDao:
                 created_at
             )
             Values (
-            (SELECT MAX(vehicle_id) + 1 FROM vehicle),
                 %(vehicle_type_id)s,
                 %(vehicle_status_id)s,
                 %(plate_number)s,

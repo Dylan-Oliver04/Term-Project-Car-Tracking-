@@ -94,12 +94,11 @@ class VehicleAssignmentDAO:
     def create_assignment(self, data):
         with get_cursor() as cursor:
 
-            cursor.execute(sql.SQL("LOCK TABLE {} IN EXCLUSIVE MODE").format(TABLE))
+            #cursor.execute(sql.SQL("LOCK TABLE {} IN EXCLUSIVE MODE").format(TABLE))
             cursor.execute(
-                sql.SQL("INSERT INTO {} (assignment_id, vehicle_id, driver_id, assigned_from, assigned_to) "
-                        "VALUES ((SELECT COALESCE(MAX(assignment_id), 0) + 1 FROM {}), "
-                        "%(vehicle_id)s, %(driver_id)s, %(assigned_from)s, %(assigned_to)s) "
-                        "RETURNING " + COLUMNS).format(TABLE, TABLE),
+                sql.SQL("INSERT INTO {} (vehicle_id, driver_id, assigned_from, assigned_to) "
+                        "VALUES (%(vehicle_id)s, %(driver_id)s, %(assigned_from)s, %(assigned_to)s) "
+                        "RETURNING " + COLUMNS).format(TABLE),   #format(TABLE, TABLE)
                 data)
             return cursor.fetchone()
 

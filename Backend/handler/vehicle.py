@@ -45,7 +45,7 @@ class VehicleHandler:
         # return {"Vehicleid" : 1, "VehicleName" : "Cooked"}
 
     def get_vehicle_by_ID(self, vehicle_id):
-        if vehicle_id < 0:
+        if vehicle_id <= 0:
             raise HTTPException(status_code=400,detail="Invalid query parameter values." )
             
         dao = VehicleDao()
@@ -93,7 +93,7 @@ class VehicleHandler:
         return update
 
     def delete_vehicle(self, vehicle_id):
-        if vehicle_id < 0:
+        if vehicle_id <= 0:
             raise HTTPException(status_code=400,detail="Invalid query parameter values." )
             
         dao = VehicleDao()
@@ -112,7 +112,7 @@ class VehicleHandler:
 
     # Purpose: Return the most recent location of a vehicle.
     def get_current_location(self, vehicle_id):
-            if vehicle_id < 0:
+            if vehicle_id <= 0:
                 raise HTTPException(status_code=400,detail="vehicle_id is not a positive integer." )
 
             dao = VehicleDao()
