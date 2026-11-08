@@ -5,12 +5,24 @@ from contextlib import contextmanager
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
 from psycopg2.pool import SimpleConnectionPool
+from pydantic import BaseModel
 
 from config.dbconfig import DB_CONFIG, POOL_CONFIG
 
 
 _pool = None
 
+class DriverCreate(BaseModel):
+    first_name: str
+    last_name: str
+    license_number: str
+    hired_at: str
+
+class DriverUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    license_number: str | None = None
+    hired_at: str | None = None
 
 @contextmanager
 def get_cursor():
