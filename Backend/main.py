@@ -2,21 +2,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware 
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from datetime import datetime
 
 # Import DAO Api Specifications from dao folder
 from dao.vehicle import Vehicle, VehicleUpdate, VehicleCreate
 from dao.road_segment import RoadSegmentCreate, RoadSegmentUpdate
 from dao.parking_area import ParkingAreaCreate, ParkingAreaUpdate
-from dao.location_ping import Location_Ping, Location_Ping_Update
-from dao.trip import Trip, TripUpdate
 
 # Import Handler Api Specifications from handler folder
 from handler.vehicle import VehicleHandler
 from handler.road_segment import RoadSegmentHandler
 from handler.parking_area import ParkingAreaHandler
-from handler.location_ping import Location_Ping_Handler
-from handler.trip import TripHandler
 
 app = FastAPI()
 
@@ -107,62 +102,3 @@ async def delete_parking_area(parking_area_id: int):
     return ParkingAreaHandler().delete_parking_area(parking_area_id)
 
 
-#5.4 Location Ping
-@app.post("/api/v1/location-pings", status_code=201)
-async def create_location_ping(ping_data: Location_Ping):
-    return Location_Ping_Handler().create_location_ping(ping_data)
-
-@app.get("/api/v1/location-pings")
-async def get_location_pings(vehicle_id: int | None = None, from_ts: datetime | None = None,
-                             to_ts: datetime | None = None, bbox: str | None = None,
-                             limit: int = 100, offset: int = 0):
-    return Location_Ping_Handler().get_all_location_pings(
-        vehicle_id=vehicle_id, from_ts=from_ts, to_ts=to_ts, bbox=bbox, limit=limit, offset=offset)
-
-@app.get("/api/v1/location-pings/{ping_id}")
-async def get_location_ping_by_ID(ping_id: int):
-    return Location_Ping_Handler().get_location_ping_by_id(ping_id)
-
-@app.put("/api/v1/location-pings/{ping_id}")
-async def update_location_ping(ping_id: int, ping_data: Location_Ping_Update):
-    return Location_Ping_Handler().update_location_ping(ping_id, ping_data)
-
-@app.delete("/api/v1/location-pings/{ping_id}")
-async def delete_location_ping(ping_id: int):
-    return Location_Ping_Handler().delete_location_ping(ping_id)
-
-@app.get("/api/v1/vehicles/{vehicle_id}/pings")
-async def get_vehicle_pings(vehicle_id: int, limit: int = 100, offset: int = 0,
-                            from_ts: datetime | None = None, to_ts: datetime | None = None):
-    return Location_Ping_Handler().get_location_ping_by_vehicle_id(
-        vehicle_id, limit=limit, offset=offset, from_ts=from_ts, to_ts=to_ts)
-
-
-#5.5 Trip
-@app.post("/api/v1/trips", status_code=201)
-async def create_trip(trip_data: Trip):
-    return TripHandler().create_trip(trip_data)
-
-@app.get("/api/v1/trips")
-async def get_trips(vehicle_id: int | None = None, from_ts: datetime | None = None,
-                    to_ts: datetime | None = None, limit: int = 50, offset: int = 0):
-    return TripHandler().get_all_trips(
-        vehicle_id=vehicle_id, from_ts=from_ts, to_ts=to_ts, limit=limit, offset=offset)
-
-@app.get("/api/v1/trips/{trip_id}")
-async def get_trip_by_ID(trip_id: int):
-    return TripHandler().get_trip_by_id(trip_id)
-
-@app.put("/api/v1/trips/{trip_id}")
-async def update_trip(trip_id: int, trip_data: TripUpdate):
-    return TripHandler().update_trip(trip_id, trip_data)
-
-@app.delete("/api/v1/trips/{trip_id}")
-async def delete_trip(trip_id: int):
-    return TripHandler().delete_trip(trip_id)
-
-@app.get("/api/v1/vehicles/{vehicle_id}/trips")
-async def get_vehicle_trips(vehicle_id: int, limit: int = 50, offset: int = 0,
-                            from_ts: datetime | None = None, to_ts: datetime | None = None):
-    return TripHandler().get_trip_by_vehicle_id(
-        vehicle_id, limit=limit, offset=offset, from_ts=from_ts, to_ts=to_ts)
