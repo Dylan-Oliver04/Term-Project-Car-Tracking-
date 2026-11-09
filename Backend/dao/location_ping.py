@@ -146,8 +146,7 @@ class Location_PingDAO:
             cursor.execute(count_query, tuple(params))
             count = cursor.fetchone()["count"]
         
-            query = (self.SELECT_PING_SUMMARY + where_clause + " ORDER BY ts DESC, ping_id DESC LIMIT %s OFFSET %s")
-        
+            query = (self.SELECT_PING_SUMMARY + where_clause + " ORDER BY ping_id ASC LIMIT %s OFFSET %s")
             cursor.execute(
                 query,
                 tuple(params + [limit, offset])
@@ -213,8 +212,7 @@ class Location_PingDAO:
             cursor.execute(count_query, tuple(params))
             count = cursor.fetchone()["count"]
 
-            query = (self.SELECT_PING_BY_VEHICLE + where_clause + " ORDER BY ts DESC, ping_id DESC LIMIT %s OFFSET %s")
-
+            query = (self.SELECT_PING_BY_VEHICLE + where_clause + " ORDER BY ping_id ASC LIMIT %s OFFSET %s")
             cursor.execute(
                 query,
                 tuple(params + [limit, offset])

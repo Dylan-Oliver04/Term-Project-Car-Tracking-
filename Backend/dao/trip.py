@@ -127,8 +127,7 @@ class TripDAO:
             cursor.execute(count_query, tuple(params))
             count = cursor.fetchone()["count"]
 
-            query = (SELECT_TRIP_SUMMARY + where_clause + " ORDER BY start_ts DESC, trip_id DESC LIMIT %s OFFSET %s")
-
+            query = (SELECT_TRIP_SUMMARY + where_clause + " ORDER BY trip_id ASC LIMIT %s OFFSET %s")
             cursor.execute(query, tuple(params + [limit, offset]))
 
             items = [dict(row) for row in cursor.fetchall()]
@@ -272,7 +271,7 @@ class TripDAO:
             )
             cursor.execute(count_query, tuple(params))
             count = cursor.fetchone()["count"]
-            query = (SELECT_TRIP_BY_VEHICLE + where_clause + " ORDER BY start_ts DESC, trip_id DESC LIMIT %s OFFSET %s")
+            query = (SELECT_TRIP_BY_VEHICLE + where_clause + " ORDER BY trip_id ASC LIMIT %s OFFSET %s")
             cursor.execute(query, tuple(params + [limit, offset]))
             items = [dict(row) for row in cursor.fetchall()]
             return {
